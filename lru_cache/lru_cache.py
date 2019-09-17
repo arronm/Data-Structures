@@ -58,7 +58,7 @@ class LRUCache:
     # it is a new key, is there room in the cache
     if self.storage.length < self.limit:
       # there is room in the cache, just add key
-      node = self.storage.add_to_tail((key, value))
+      node = self.storage.add_to_tail(key)
       self.reference[key] = {
         'value': value,
         'node': node
@@ -66,9 +66,9 @@ class LRUCache:
       return
     
     # unlink storage.head
-    old_key, old_value = self.storage.remove_from_head()
+    old_key = self.storage.remove_from_head()
     # add value to tail
-    node = self.storage.add_to_tail((key, value))
+    node = self.storage.add_to_tail(key)
     # remove old reference, del reference[key]
     del self.reference[old_key]
     # add new reference with value/node
