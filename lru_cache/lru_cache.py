@@ -29,8 +29,14 @@ class LRUCache:
   def get(self, key):
     # access storage dict key
     if not self.reference:
-      return None;
-    return self.reference[key] if key in self.reference.keys() else None
+      return None
+    # Update to most recently used
+    return self.reference[key]['value'] if key in self.reference.keys() else None
+
+    # check if reference exists
+    # check if this key exists
+      # move reference node to end
+      # return reference value
 
   """
   Adds the given key-value pair to the cache. The newly-
@@ -43,7 +49,28 @@ class LRUCache:
   the newly-specified value. 
   """
   def set(self, key, value):
-    self.reference[key] = value;
+    # if I'm updating a key, also update it's order in the cache
+    node = self.storage.add_to_tail(value)
+    self.reference[key] = {
+      'value': value,
+      'node': node
+    }
+
+    # are we updating an existing key
+    if key in self.reference.keys():
+      # We are updating an existing key
+      # Update it's order to reflect recently used
+      return
+
+    # it is a new key, is there room in the cache
+    if self.storage.length < self.limit:
+      # there is room in the cache, just add key
+      return
+    
+    # unlink storage.head
+    # add value to tail
+    # remove old reference, del reference[key]
+    # add new reference with value/node
 
 
 if __name__ == '__main__':
