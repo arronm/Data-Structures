@@ -11,6 +11,7 @@ class TextBuffer:
         # using doubly linked list because it already exists
         # a singly linked list would be more memory efficient
         self.buffer = DoublyLinkedList()
+        self.__len__ = 24
     
     def __str__(self):
         """
@@ -65,6 +66,9 @@ class TextBuffer:
         self.buffer.tail.next = buffer.buffer.head
         buffer.buffer.head.previous = self.buffer.tail
 
+    def __len__(self):
+        return self.buffer.length
+
 if __name__ == '__main__':
     buffer = TextBuffer()
     buffer.append('z')
@@ -80,4 +84,5 @@ if __name__ == '__main__':
     buffer.join(buffer2)
     buffer.delete_front()
     buffer.append('asdfl')
-    print(buffer.__str__())
+    print(len(buffer))
+    print(buffer)
