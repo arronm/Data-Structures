@@ -14,8 +14,8 @@ class TextBufferTests(unittest.TestCase):
   def test_buffer_append(self):
     self.buffer_one.append('x')
     self.assertEqual(self.buffer_one.__str__(), 'x')
-    self.buffer_one.append('y')
-    self.assertEqual(self.buffer_one.__str__(), 'xy')
+    self.buffer_one.append('yz')
+    self.assertEqual(self.buffer_one.__str__(), 'xyz')
 
 
   def test_buffer_prepend(self):
