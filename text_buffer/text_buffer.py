@@ -28,7 +28,7 @@ class TextBuffer:
 
     def append(self, chars):
         """
-        Adds a new character to the back of the buffer
+        Adds new characters to the back of the buffer
         """
         # Add characters to tail of buffer
         for letter in chars:
@@ -36,10 +36,10 @@ class TextBuffer:
     
     def prepend(self, chars):
         """
-        Adds a new character to the front of the buffer
+        Adds new characters to the front of the buffer
         """
         # Add characters to the head of buffer
-        for letter in chars:
+        for letter in chars[::-1]:
             self.buffer.add_to_head(letter)
     
     def delete_front(self):
