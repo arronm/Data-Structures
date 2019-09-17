@@ -27,17 +27,8 @@ class LRUCache:
   key-value pair doesn't exist in the cache. 
   """
   def get(self, key):
-    # access storage dict key
-    # if not self.reference:
-    #   return None
-    # Update to most recently used
-    # return self.reference[key]['value'] if key in self.reference.keys() else None
-
-    # check if reference exists
-    if not self.reference: # potential refactor if self.ref and key in
-      return None;
-    # check if this key exists
-    if key in self.reference.keys():
+    # check if reference and key exist
+    if self.reference and key in self.reference.keys():
       # move reference node to end
       self.storage.move_to_end(self.reference[key]['node'])
       # return reference value
@@ -86,12 +77,3 @@ class LRUCache:
       'node': node
     }
     return
-
-
-if __name__ == '__main__':
-  cache = LRUCache(2);
-  cache.set('abc', 123)
-  cache.set('def', 456)
-  cache.set('abc', 789)
-  cache.set('ghi', 321)
-  print(cache.get('def'))
