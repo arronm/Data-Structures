@@ -1,3 +1,8 @@
+import sys
+sys.path.append('../doubly_linked_list')
+from doubly_linked_list import DoublyLinkedList
+
+
 class LRUCache:
   """
   Our LRUCache class keeps track of the max number of nodes it
@@ -7,7 +12,12 @@ class LRUCache:
   to every node stored in the cache.
   """
   def __init__(self, limit=10):
-    pass
+    #  set up limit
+    self.limit = limit
+    # set up storage dll
+    self.storage = DoublyLinkedList()
+    # set up reference dict
+    self.reference = {}
 
   """
   Retrieves the value associated with the given key. Also
@@ -17,7 +27,14 @@ class LRUCache:
   key-value pair doesn't exist in the cache. 
   """
   def get(self, key):
-    pass
+    # check if reference and key exist
+    if self.reference and key in self.reference.keys():
+      # move reference node to end
+      self.storage.move_to_end(self.reference[key]['node'])
+      # return reference value
+      return self.reference[key]['value']
+
+    return None;
 
   """
   Adds the given key-value pair to the cache. The newly-
@@ -30,4 +47,33 @@ class LRUCache:
   the newly-specified value. 
   """
   def set(self, key, value):
-    pass
+    # are we updating an existing key
+    if key in self.reference.keys():
+      # We are updating an existing key
+      self.reference[key]['value'] = value
+      # Update it's order to reflect recently used
+      self.storage.move_to_end(self.reference[key]['node'])
+      return
+
+    # it is a new key, is there room in the cache
+    if self.storage.length < self.limit:
+      # there is room in the cache, just add key
+      node = self.storage.add_to_tail(key)
+      self.reference[key] = {
+        'value': value,
+        'node': node
+      }
+      return
+    
+    # unlink storage.head
+    old_key = self.storage.remove_from_head()
+    # add value to tail
+    node = self.storage.add_to_tail(key)
+    # remove old reference, del reference[key]
+    del self.reference[old_key]
+    # add new reference with value/node
+    self.reference[key] = {
+      'value': value,
+      'node': node
+    }
+    return
