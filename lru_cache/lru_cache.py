@@ -28,15 +28,22 @@ class LRUCache:
   """
   def get(self, key):
     # access storage dict key
-    if not self.reference:
-      return None
+    # if not self.reference:
+    #   return None
     # Update to most recently used
-    return self.reference[key]['value'] if key in self.reference.keys() else None
+    # return self.reference[key]['value'] if key in self.reference.keys() else None
 
     # check if reference exists
+    if not self.reference: # potential refactor if self.ref and key in
+      return None;
     # check if this key exists
+    if key in self.reference.keys():
       # move reference node to end
+      storage.move_to_end(self.reference[key]['node'])
       # return reference value
+      return storage[key]['value']
+
+    return None;
 
   """
   Adds the given key-value pair to the cache. The newly-
