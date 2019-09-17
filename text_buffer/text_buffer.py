@@ -77,4 +77,5 @@ if __name__ == '__main__':
     buffer2.append('z')
     buffer.join(buffer2)
     buffer.delete_front()
+    buffer.append('asdfl')
     print(buffer.__str__())
