@@ -25,19 +25,21 @@ class TextBuffer:
         return string
 
 
-    def append(self, char):
+    def append(self, chars):
         """
         Adds a new character to the back of the buffer
         """
-        # Add character to tail of buffer
-        self.buffer.add_to_tail(char)
+        # Add characters to tail of buffer
+        for letter in chars:
+            self.buffer.add_to_tail(letter)
     
-    def prepend(self, char):
+    def prepend(self, chars):
         """
         Adds a new character to the front of the buffer
         """
-        # Add character to the head of buffer
-        self.buffer.add_to_head(char)
+        # Add characters to the head of buffer
+        for letter in chars:
+            self.buffer.add_to_head(letter)
     
     def delete_front(self):
         """

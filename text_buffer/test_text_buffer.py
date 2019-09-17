@@ -58,16 +58,3 @@ class TextBufferTests(unittest.TestCase):
 
 if __name__ == '__main__':
   unittest.main()
-# buffer = TextBuffer()
-# buffer.append('z')
-# buffer.append('b')
-# buffer.append('c')
-# buffer.delete_front()
-# buffer.prepend('a')
-# buffer.prepend('q')
-# buffer2 = TextBuffer()
-# buffer2.prepend('y')
-# buffer2.prepend('x')
-# buffer2.append('z')
-# buffer.join(buffer2)
-# buffer.delete_front()
