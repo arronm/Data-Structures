@@ -39,9 +39,9 @@ class LRUCache:
     # check if this key exists
     if key in self.reference.keys():
       # move reference node to end
-      storage.move_to_end(self.reference[key]['node'])
+      self.storage.move_to_end(self.reference[key]['node'])
       # return reference value
-      return storage[key]['value']
+      return self.reference[key]['value']
 
     return None;
 
@@ -56,31 +56,42 @@ class LRUCache:
   the newly-specified value. 
   """
   def set(self, key, value):
-    # if I'm updating a key, also update it's order in the cache
-    node = self.storage.add_to_tail(value)
-    self.reference[key] = {
-      'value': value,
-      'node': node
-    }
-
     # are we updating an existing key
     if key in self.reference.keys():
       # We are updating an existing key
+      self.reference[key]['value'] = value
       # Update it's order to reflect recently used
+      self.storage.move_to_end(self.reference[key]['node'])
       return
 
     # it is a new key, is there room in the cache
     if self.storage.length < self.limit:
       # there is room in the cache, just add key
+      node = self.storage.add_to_tail((key, value))
+      self.reference[key] = {
+        'value': value,
+        'node': node
+      }
       return
     
     # unlink storage.head
+    old_key, old_value = self.storage.remove_from_head()
     # add value to tail
+    node = self.storage.add_to_tail((key, value))
     # remove old reference, del reference[key]
+    del self.reference[old_key]
     # add new reference with value/node
+    self.reference[key] = {
+      'value': value,
+      'node': node
+    }
+    return
 
 
 if __name__ == '__main__':
-  cache = LRUCache();
+  cache = LRUCache(2);
   cache.set('abc', 123)
-  print(cache.get('abc'))
+  cache.set('def', 456)
+  cache.set('abc', 789)
+  cache.set('ghi', 321)
+  print(cache.get('def'))
