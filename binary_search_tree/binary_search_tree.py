@@ -52,11 +52,13 @@ class BinarySearchTree:
         return self.max
 
     def for_each(self, cb):
-        # while self.left
-        #   recursive function with left node
-        # while self.right
-        #   recursive function with right node
-        pass
+        if self.left:
+            self.left.for_each(cb)
+
+        if self.right:
+            self.right.for_each(cb)
+
+        cb(self.value)
 
 if __name__ == '__main__':
     print('hello')
