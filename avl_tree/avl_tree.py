@@ -100,4 +100,32 @@ class AVLTree:
     if we need to rebalance
     """
     def insert(self, key):
+        # insert logic
+        if self.node is None:
+            self.node = Node(key)
+            return # DEBUG: How will this work in recursion?
+        
+        if key >= self.node.key:
+            # move down right tree
+            if self.node.right is None:
+                self.node.right = AVLTree(Node(key))
+            else:
+                self.node.right.insert(key)
+        
+        else:
+            # move down left tree
+            if self.node.left is None:
+                self.node.left = AVLTree(Node(key))
+            else:
+                self.node.left.insert(key)
+
+        # update_height
+        self.update_height()
+        # update_balance
+        self.update_balance()
+        # if balance < -1 or > 1, rebalance
+        if self.balance < -1 or self.balance > 1:
+            # self.rebalance()
+            print('gotta rebalance')
+            pass
         pass
