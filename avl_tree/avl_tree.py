@@ -76,7 +76,17 @@ class AVLTree:
     of the new parent. 
     """
     def left_rotate(self):
-        pass
+        next_self = self.node.right
+        temp_left = AVLTree(self.node)
+
+        if self.node.right.node.left:
+            temp_right = self.node.right.node.left
+            temp_left.node.right = temp_right
+
+        next_self.node.left = temp_left
+
+        self.node = next_self.node
+
 
     """
     Perform a right rotation, making the left child of this
@@ -84,7 +94,16 @@ class AVLTree:
     of the new parent. 
     """
     def right_rotate(self):
-        pass
+        next_self = self.node.left
+        temp_right = AVLTree(self.node)
+
+        if self.node.left.node.right:
+            temp_left = self.node.left.node.right
+            temp_right.node.left = temp_left
+        
+        next_self.node.right = temp_right
+
+        self.node = next_self.node
 
     """
     Sets in motion the rebalancing logic to ensure the
@@ -92,6 +111,8 @@ class AVLTree:
     1 or -1
     """
     def rebalance(self):
+        # if left height > right height, rotate right
+        # else rotate left
         pass
         
     """
@@ -125,7 +146,4 @@ class AVLTree:
         self.update_balance()
         # if balance < -1 or > 1, rebalance
         if self.balance < -1 or self.balance > 1:
-            # self.rebalance()
-            print('gotta rebalance')
-            pass
-        pass
+            self.rebalance()
