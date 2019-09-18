@@ -9,6 +9,9 @@ class BinarySearchTree:
     self.left = None
     self.right = None
 
+    # Set our initial maximum value to initial value
+    self.max = value
+
   def insert(self, value):
     pass
 
@@ -16,7 +19,14 @@ class BinarySearchTree:
     pass
 
   def get_max(self):
-    pass
+    return self.max
 
   def for_each(self, cb):
+    # while self.left
+    #   recursive function with left node
+    # while self.right
+    #   recursive function with right node
     pass
+
+if __name__ == '__main__':
+  print('hello')
