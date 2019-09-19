@@ -64,7 +64,11 @@ class BinarySearchTree:
 
     # Print all the values in order from low to high
     # Hint:  Use a recursive, depth first traversal
-    def in_order_print(self, node):
+    def in_order_dft(self, node):
+        # left-first depth-first recursive function
+        # if left, left.in_order_dft
+        # print(value)
+        # if right, right.in_order_dft
         pass
 
     # Print the value of every node, starting with the given node,
