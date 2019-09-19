@@ -67,9 +67,15 @@ class BinarySearchTree:
     def in_order_dft(self, node):
         # left-first depth-first recursive function
         # if left, left.in_order_dft
+        if node.left:
+            node.left.in_order_dft(node.left)
+        
         # print(value)
+        print(node.value)
+
         # if right, right.in_order_dft
-        pass
+        if node.right:
+            node.right.in_order_dft(node.right)
 
     # Print the value of every node, starting with the given node,
     # in an iterative breadth first traversal
@@ -93,4 +99,13 @@ class BinarySearchTree:
         pass
 
 if __name__ == '__main__':
-    print('hello')
+    bst = BinarySearchTree(5)
+    bst.insert(3)
+    bst.insert(7)
+    bst.insert(2)
+    bst.insert(4)
+    bst.insert(9)
+    bst.insert(8)
+    bst.insert(3)
+
+    bst.in_order_dft(bst)
