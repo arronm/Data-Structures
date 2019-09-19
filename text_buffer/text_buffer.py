@@ -11,6 +11,7 @@ class TextBuffer:
         # using doubly linked list because it already exists
         # a singly linked list would be more memory efficient
         self.buffer = DoublyLinkedList()
+        self.__len__ = 24
     
     def __str__(self):
         """
@@ -25,19 +26,21 @@ class TextBuffer:
         return string
 
 
-    def append(self, char):
+    def append(self, chars):
         """
-        Adds a new character to the back of the buffer
+        Adds new characters to the back of the buffer
         """
-        # Add character to tail of buffer
-        self.buffer.add_to_tail(char)
+        # Add characters to tail of buffer
+        for letter in chars:
+            self.buffer.add_to_tail(letter)
     
-    def prepend(self, char):
+    def prepend(self, chars):
         """
-        Adds a new character to the front of the buffer
+        Adds new characters to the front of the buffer
         """
-        # Add character to the head of buffer
-        self.buffer.add_to_head(char)
+        # Add characters to the head of buffer
+        for letter in chars[::-1]:
+            self.buffer.add_to_head(letter)
     
     def delete_front(self):
         """
@@ -63,6 +66,9 @@ class TextBuffer:
         self.buffer.tail.next = buffer.buffer.head
         buffer.buffer.head.previous = self.buffer.tail
 
+    def __len__(self):
+        return self.buffer.length
+
 if __name__ == '__main__':
     buffer = TextBuffer()
     buffer.append('z')
@@ -77,4 +83,6 @@ if __name__ == '__main__':
     buffer2.append('z')
     buffer.join(buffer2)
     buffer.delete_front()
-    print(buffer.__str__())
+    buffer.append('asdfl')
+    print(len(buffer))
+    print(buffer)
