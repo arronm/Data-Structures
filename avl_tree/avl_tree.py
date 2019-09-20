@@ -76,12 +76,14 @@ class AVLTree:
     of the new parent. 
     """
     def left_rotate(self):
-        next_self = self.node.right
+        next_self = AVLTree(self.node.right.node)
         temp_left = AVLTree(self.node)
 
         if self.node.right.node.left:
-            temp_right = self.node.right.node.left
+            temp_right = AVLTree(self.node.right.node.left.node)
             temp_left.node.right = temp_right
+        else:
+            temp_left.node.right = None
 
         next_self.node.left = temp_left
 
@@ -94,11 +96,11 @@ class AVLTree:
     of the new parent. 
     """
     def right_rotate(self):
-        next_self = self.node.left
+        next_self = AVLTree(self.node.left.node)
         temp_right = AVLTree(self.node)
 
         if self.node.left.node.right:
-            temp_left = self.node.left.node.right
+            temp_left = AVLTree(self.node.left.node.right.node)
             temp_right.node.left = temp_left
         
         next_self.node.right = temp_right
@@ -112,8 +114,18 @@ class AVLTree:
     """
     def rebalance(self):
         # if left height > right height, rotate right
+        if self.balance <= -1:
+            print('right rotate at', self.node.key, 'for', self.balance)
+            # self.display()
+            self.left_rotate()
+            # self.display()
         # else rotate left
-        pass
+        if self.balance >= 1:
+            print('left rotate')
+            # self.display()
+            self.right_rotate()
+            # self.display()
+        # pass
         
     """
     Uses the same insertion logic as a binary search tree
@@ -124,6 +136,7 @@ class AVLTree:
         # insert logic
         if self.node is None:
             self.node = Node(key)
+            self.height = 0
             return # DEBUG: How will this work in recursion?
         
         if key >= self.node.key:
@@ -140,10 +153,24 @@ class AVLTree:
             else:
                 self.node.left.insert(key)
 
+        if key == 8:
+            print('self:', self.node.key)
         # update_height
-        self.update_height()
+        # self.update_height()
+        
+        #  Get the height of this node
+        left = 0
+        right = 0
+        if self.node.left:
+            left = self.node.left.height + 1
+        if self.node.right:
+            right = self.node.right.height + 1
+        self.height = left if left >= right else right
+        print(f'node {self.node.key} height = {self.height}')
+
         # update_balance
-        self.update_balance()
+        self.balance = left - right
+        print(f'node {self.node.key} balance = {self.balance}')
         # if balance < -1 or > 1, rebalance
         if self.balance < -1 or self.balance > 1:
             self.rebalance()
